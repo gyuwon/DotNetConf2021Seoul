@@ -12,7 +12,7 @@ namespace Sample
     {
         public TestContext TestContext { get; set; }
 
-        private async IAsyncEnumerable<int> Get([EnumeratorCancellation] CancellationToken cancellationToken = default)
+        private async IAsyncEnumerable<int> Get()
         {
             for (int i = 0; i < 10; i++)
             {

@@ -11,15 +11,6 @@ namespace Sample
     {
         public TestContext TestContext { get; set; }
 
-        [TestMethod]
-        public Task Run()
-        {
-            IAsyncEnumerable<int> xs = Get();
-            var cancellation = new CancellationTokenSource();
-            cancellation.Cancel();
-            return PrintValues(xs, cancellation.Token);
-        }
-
         public async IAsyncEnumerable<int> Get([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             TestContext.WriteLine($"Canceled: {cancellationToken.IsCancellationRequested}");
@@ -37,6 +28,19 @@ namespace Sample
             {
                 TestContext.WriteLine($"{x}");
             }
+        }
+
+        [TestMethod]
+        public Task Run()
+        {
+            IAsyncEnumerable<int> xs = Get();
+
+            var cancellation = new CancellationTokenSource();
+            CancellationToken cancellationToken = cancellation.Token;
+
+            cancellation.Cancel();
+
+            return PrintValues(xs, cancellationToken);
         }
     }
 }
