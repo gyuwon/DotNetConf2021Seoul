@@ -28,8 +28,8 @@ namespace Sample
         [DataRow(null, null)]
         public void Concat(string a, string b)
         {
-            var ma = Maybe.Create(a);
-            var mb = Maybe.Create(b);
+            Maybe<string> ma = Maybe.Create(a);
+            Maybe<string> mb = Maybe.Create(b);
             Maybe<string> result = ma.Bind(x => mb.Map(y => $"{x}{y}"));
 
             result.Do(forJust: value => TestContext.WriteLine($"Just {value}"),
